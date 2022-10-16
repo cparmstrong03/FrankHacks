@@ -1,1 +1,3 @@
-print("We know what we're doing")
+message = "We know what we're doing"
+
+print(message)
