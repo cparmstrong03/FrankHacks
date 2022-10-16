@@ -1,3 +1,3 @@
 message = 'We know what we\'re doing'
 
-print(message)
+print(message + ' (sort of)')
