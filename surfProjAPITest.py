@@ -31,3 +31,4 @@ print("highest daily price " + json.dumps(highRaw))
 print("lowest daily price " + json.dumps(lowRaw))
 
 
+
