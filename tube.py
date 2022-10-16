@@ -46,7 +46,8 @@ offshore_windmarkers = [180.0, 180.0-30, 180-30-17.5, 90]
 offshore_scoremarkers = [5.0, 4.0, 3.2, 1.0]
 
 
-def winddirection_rating(dirdiff):
+def winddirection_rating(beachname, winddirection):
+    dirdiff = diff_in_directions(beachname, winddirection)
     dirdiff = (dirdiff + 180) % 360
     if dirdiff <= 90:
         for i in range(len(onshore_scoremarkers)- 1):
@@ -85,8 +86,8 @@ def weight_of_windspeed(windspeed):
     weight += (-0.0091662 * windspeed**4) + (0.0490661 * windspeed**3) - (0.115177 * windspeed**2) + (0.0604123 * windspeed) + 0.994062
     return min(weight, 0.99)
 
-def final_rating(winddirection, windsspeed):
-    wd_rating = winddirection_rating(winddirection)
+def final_rating(beachname, winddirection, windsspeed):
+    wd_rating = winddirection_rating(beachname, winddirection)
     ws_rating = windspeed_rating(windsspeed)
     ws_weight = weight_of_windspeed(windsspeed)
     return ((1-ws_weight) * wd_rating) + (ws_weight * ws_rating)

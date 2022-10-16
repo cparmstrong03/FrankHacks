@@ -11,7 +11,7 @@ def mainMethod(name):
 
 
 
-    finalScore = tube.final_rating(direction, speed)
+    finalScore = tube.final_rating(name, direction, speed)
 
 
     return finalScore
