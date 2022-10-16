@@ -1,45 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/BananaWavesCalHackathon.jpeg" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/BananaWavesCalHackathon.jpeg" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/BananaWavesCalHackathon.jpeg" or "BananaWavesCalHackathon.jpeg", "%PUBLIC_URL%/BananaWavesCalHackathon.jpeg" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Banana Waves</title>
+    <title>Todo App</title>
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+ 
+    <py-register-widget src="./pylist.py" name="py-list" klass="PyList"></py-register-widget>
+
+    <py-script>
+      def add_task(*ags, **kws):
+        # create a new dictionary representing the new task
+        task = { "content": new_task_content.value,  "done": False, "created_at": dt.now() }
+
+        # add a new task to the list and tell it to use the `content` key to show in the UI
+        # and to use the key `done` to sync the task status with a checkbox element in the UI
+        myList.add(task)
+
+        # clear the inputbox element used to create the new task
+        new_task_content.clear()
+
+    </py-script>
   </head>
+
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+      <py-title>To Do List</py-title>
+      <py-box widths="4/5;1/5">
+        <py-inputbox id="new-task-content">
+          def on_keypress(e):
+            if (e.code == "Enter"):
+              add_task()
+        </py-inputbox>
+        <py-button id="new-task-btn" label="Add Task!">
+          def on_click(evt):
+            add_task()
+        </py-button>
+      </py-box>
 
-    
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+      <py-list id="myList"></py-list>
+      <py-repl id="my-repl" auto-generate="true"> </py-repl>
   </body>
 </html>
