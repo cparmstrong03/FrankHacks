@@ -55,4 +55,3 @@ def wimbdy(latitude, longitude):
 	# saved_column = df.column_name #you can also use df['column_name']
 
 a = [40, 100]
-print(wimbdy(40,100))

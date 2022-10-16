@@ -18,4 +18,6 @@ def mainMethod(name):
 
 
 
-print(mainMethod('Kaimu Black Sand Beach, HI'))
+for i in tube.beaches:
+    print(mainMethod(i))
+    print('')
