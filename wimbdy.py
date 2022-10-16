@@ -1,8 +1,9 @@
 import requests
 import csv
+import pandas as pd
 
-LAT = "25.77481"
-LONG = "-81.19773"
+LAT = "41.8781"
+LONG = "87.6298"
 combo = LAT + "," + LONG
 
 
@@ -26,8 +27,21 @@ print(response.apparent_encoding)
 decoded_content = response.content.decode('utf-8')
 
 cr = csv.reader(decoded_content.splitlines(), delimiter=',')
-my_list = list(cr)
-for row in my_list:
-    print(row)
+# my_list = list(cr)
+# for row in my_list:
+#     print(row)
 
 
+df = pd.DataFrame(cr)
+
+print(df.to_string()) 
+
+print(df[1])
+print(df[6])
+print(df[10])
+
+print()
+print("direction: " + df[6][1])
+print("speed: " + df[10][1])
+# df = pd.read_csv(cr)
+# saved_column = df.column_name #you can also use df['column_name']
