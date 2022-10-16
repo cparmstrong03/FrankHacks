@@ -18,4 +18,4 @@ def mainMethod(name):
 
 
 
-print(mainMethod('Ortley Beach, Toms River, NJ'))
+print(mainMethod('Kaimu Black Sand Beach, HI'))

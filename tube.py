@@ -18,7 +18,7 @@ beaches = {
     'Beach & Boardwalk, Seaside Park, NJ':	[[39.926064,	-74.073860], 0],
     'Ocean Isle Beach, NC':	[[33.905758,	-78.391144], 0],
     'Mutiny Bay, WA':	[[47.993195,	-122.561462], 0],
-    'Ocean Beach, CA': [[32.7495, 117.2470], 0],
+    'Ocean Beach, CA': [[32.7495, 117.2470], 90],
     'Long Beach, NY': [[40.5884, 73.6579], 0],
     'Fort Cronkite/Rodeo Beach, CA': [[37.8326, 122.5349], 0],
     'Pacifica Beach, CA': [[37.5989, 122.5019], 0],
@@ -49,7 +49,9 @@ offshore_scoremarkers = [5.0, 4.0, 3.2, 1.0]
 def winddirection_rating(beachname, winddirection):
     dirdiff = diff_in_directions(beachname, winddirection)
     dirdiff = (dirdiff + 180) % 360
-    if dirdiff <= 90:
+    if dirdiff <= 90 or dirdiff >= 270:
+        if dirdiff >= 270:
+            dirdiff += (2 * (360 - dirdiff)) % 360
         for i in range(len(onshore_scoremarkers)- 1):
             lowerboundwind = onshore_windmarkers[i]
             upperboundwind = onshore_windmarkers[i+1]
@@ -60,8 +62,9 @@ def winddirection_rating(beachname, winddirection):
                 windboundsdiff = upperboundwind - lowerboundwind
                 difffraction = (dirdiff - lowerboundwind) / windboundsdiff
                 return lowerboundscore + ((upperboundscore - lowerboundscore) * difffraction)
-
-    elif (dirdiff > 90 and dirdiff < 181):
+    else:
+        if dirdiff < 270 and dirdiff > 180:
+            dirdiff -= (2 * (dirdiff - 180))
         for i in range(len(offshore_scoremarkers) - 1):
             upperboundwind = offshore_windmarkers[i]
             lowerboundwind = offshore_windmarkers[i+1]
@@ -73,9 +76,6 @@ def winddirection_rating(beachname, winddirection):
                 updirdiff = upperboundwind - dirdiff
                 difffraction = updirdiff/windboundsdiff
                 return upperboundscore - ((upperboundscore - lowerboundscore) * difffraction)
-    
-    else:
-        print('DEBUG: Something has gone wrong brotha, and the dirdiff is greater than 180')
 
 def windspeed_rating(windspeed):
     rating = (-0.0000222107 * windspeed**4) + (0.00168262 * windspeed**3) - (0.0382879 * windspeed**2) + (0.0776512 * windspeed) + 5
@@ -90,5 +90,8 @@ def final_rating(beachname, winddirection, windsspeed):
     wd_rating = winddirection_rating(beachname, winddirection)
     ws_rating = windspeed_rating(windsspeed)
     ws_weight = weight_of_windspeed(windsspeed)
+    print('wd rating:' + str(wd_rating))
+    print('ws rating:' + str(ws_rating))
+    print('ws weight:' + str(ws_weight))
     return ((1-ws_weight) * wd_rating) + (ws_weight * ws_rating)
 
