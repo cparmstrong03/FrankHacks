@@ -1,9 +1,14 @@
 import requests
 
-r = requests.get('https://api.usa.gov/crime/fbi/sapi/api/data/supplemental/not-specified/states/CA/OFFENSE/2000/2022?API_KEY=NA9DrPF8yhGVtuH88SdGPhU2jn5pG59TulaZVxjR')
+url = "https://instagram47.p.rapidapi.com/user_following"
 
-print(r)
+querystring = {"userid":"1718924098"}
 
-#change
-#change 2
-#change 3
+headers = {
+	"X-RapidAPI-Key": "f99e001d27mshdbff5f6c6372b98p13cecfjsn6d862349dfc0",
+	"X-RapidAPI-Host": "instagram47.p.rapidapi.com"
+}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
